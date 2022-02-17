@@ -1,6 +1,6 @@
 # InfantEEGProcessing2022
 The analysis uses functions from EEGlab toolbox version 2021.1
-which cna be downloaded here 
+which can be downloaded here 
 https://sccn.ucsd.edu/eeglab/index.php
 
 The code adapts from our previous study and adds new functions (IC labeling etc.) in the latest EEGlab toolbox
