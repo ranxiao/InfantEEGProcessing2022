@@ -54,12 +54,19 @@ else
         pop_eegplot( EEG, 1, 1, 1);
         eeglab redraw;
         
+        f = msgbox("Select bad segments by dragging");
         pause;
+
         %% Mark and reject segments with large fluctuations
         % (GUI operation needed: 1. Mark segments; 2. Run code block; 3. Click reject button)
         % Tip: Set window length as 20 sec to select bad segments
         g = get(gcf, 'userdata');
-        BadSegments = int64(g.winrej(:,[1 2]));
+        try
+            BadSegments = int64(g.winrej(:,[1 2]));
+        catch
+            BadSegments = [];
+        end
+
         save(strcat(ResultDir,FileName,'_BadSegments.mat'), 'BadSegments');
 
         %% Bad channel rejection and interpolation
@@ -71,6 +78,8 @@ else
         EEG = eeg_checkset( EEG );
         pop_eegplot( EEG, 1, 1, 1);
 
+        f = msgbox("Input bad channel indices in the next box");
+        pause;
         %% (OPTIONAL)Visual inspection as a secondary approach to identify addional ones
         % Caution: Use Channel Number, instead of channel labels!
         prompt = {'Enter indices for bad channels'};
@@ -169,5 +178,8 @@ else
         set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
         saveas(gcf,[ResultDir FileName '_RelPower' '.fig']);
         saveas(gcf,[ResultDir FileName '_RelPower' '.jpg']);
+
+        close all;
+        clear ALLCOM ALLEEG EEGdata EEG;
     end
 end
